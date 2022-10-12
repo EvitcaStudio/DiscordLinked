@@ -4,7 +4,9 @@ A simple plugin to connect discord to vylocity.
 
 # Implementation  
 
-## Creating a app on discord
+#### #INCLUDE SCRIPT vyDiscord.min.js  
+
+# Creating a app on discord
 
 #### Head over to https://discord.com/developers/applications
 
