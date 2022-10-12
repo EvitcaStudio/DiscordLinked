@@ -165,7 +165,6 @@
 				const userObject = JSON.parse(xhttp.responseText);
 				const DiscordUser = new VYDiscordUser(userObject);
 				window.DiscordUser = DiscordUser;
-				if (VYLO) VYLO.Client.DiscordUser = DiscordUser;
 				if (VYLO) VYLO.global.DiscordUser = DiscordUser;
 				if (NETWORK) {
 					this.sendUserToServer();
