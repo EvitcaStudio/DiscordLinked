@@ -30,10 +30,16 @@ These redirects are official Domain/IPs that are trusted within this application
 > If you have many servers, add each Domain/IP.  
 > These redirects also work with local hosting!
 
-## Client ID  
+## CLIENT_ID  
 
 You will need to supply your `Client ID` inside of `discordLinked.js`  
 Open the `discordLinked.js` file, and find the declaration of `CLIENT_ID` and input your `Client ID` value inside the empty string.  
+
+## AUTO_AUTH
+
+If you would like this plugin to automatically authenticate ASAP, then open the `discordLinked.js` file, and find the declaration of `AUTO_AUTH` and input the value `true` It is false by default.  
+
+If you do not want to automatically authenticate, then you will need to use `DiscordHandler.login()`.
 
 ## Connecting to a site/app/game/etc via your discord app    
 ![image](https://user-images.githubusercontent.com/56242467/195381931-e89f7ed2-237d-4422-9c4f-29bd86add424.png)  
@@ -55,8 +61,20 @@ With networking enabled, this plugin will send a packet to the server with the n
 window.DiscordUser | DiscordUser `JavaScript`  
 DiscordUser `VyScript`
 
+window.DiscordHandler | DiscordHandler `JavaScript`  
+DiscordHandler `VyScript`  
+
 ## API  
 
+### DiscordHandler
+   - `description`: An instanced object that handles the authentication process of a discord user  
+
+### DiscordUser
+   - `description`: An instanced object that holds all data related to the authenticated discord user   
+
+###  DiscordHandler.login()
+   - `description`: Callable API to start the authentication process of a discord user  (If using `AUTO_AUTH` this is already called for you)  
+   
 ###  DiscordUser.getID()
    - `returns`: Returns the id of the logged in discord user  
 
