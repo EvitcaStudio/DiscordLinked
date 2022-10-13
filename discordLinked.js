@@ -2,13 +2,14 @@
 	const DISCORD_OAUTH2_BASE_URL = 'https://discordapp.com/api/oauth2/authorize';
 	const DISCORD_USERS_BASE_URL = 'https://discordapp.com/api/users/@me';
 	const DISCORD_AVATAR_BASE_URL = 'https://cdn.discordapp.com/avatars/';
-	const REDIRECT_URI = encodeURIComponent(window.location.href.replace('localhost', '127.0.0.1').split('?')[0]);
+	const REDIRECT_URI = encodeURIComponent(window.location.href.split('?')[0]);
 	// Discord images are by default a size of 128x128
 	const DISCORD_IMAGE_WIDTH = 128;
 	const DISCORD_IMAGE_HEIGHT = 128;
 
 // #BEGIN CODE_EDIT
 	const CLIENT_ID = '';
+	const AUTO_AUTH = false;
 	// If you want this plugin to send a packet to the server with the data of the discord user. If this is set to true it will send a packet named `dAPI256` in which the data is the account info of the discord user
 	// It will need to be parsed into an object server side
 	const NETWORK = false;
@@ -120,6 +121,9 @@
 	}
 
 	class DiscordHandlerInstance {
+		constructor() {
+			this.storedIDs = [];
+		}
 		// Get the parameters from the URL
 		getURIFragment() {
 			// Grab the parameters and create a URLSearchParam object
@@ -127,33 +131,60 @@
 			return fragment;
 		}
 
+		generateID(pID = 29) {
+			const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+			const makeID = function() {
+				let ID = '';
+				for (let i = 0; i < pID; i++) {
+					ID += chars.charAt(Math.floor(Math.random() * chars.length));
+				}
+				return ID;
+			}
+			let ID = makeID();
+			while(this.storedIDs.includes(ID)) {
+				ID = makeID();
+			}
+			this.storedIDs.push(ID);
+			return ID;
+		}
+
 		login() {
-			// If there is a code in the URL, this means we have visited the auth page and obtained it
-			// We can now use this code to get the user token
+			// If there is a accesstoken in the URL, this means we have visited the auth page and obtained it
+			// We can now use this accesstoken to exchange it for user info
 			if (this.getURIFragment().get('access_token')) {
 				this.grabDiscordUser();
 			// If there is no code then we need to go to the auth page to get one
 			} else {
-				// Move to the auth page to get the code that will be exchanged for a user token
-				// When code is grabbed, it will redirect the client to the game client again and it will have the token as a param in the URL
-				window.location.assign(DISCORD_OAUTH2_BASE_URL + '?client_id=' + CLIENT_ID + '&redirect_uri=' + REDIRECT_URI + '&response_type=token&scope=identify&prompt=none');
+				// Move to the auth page to get the accesstoken that will be exchanged for a user object
+				// When the accesstoken is grabbed, it will redirect the client to the game client again and it will have the token as a param in the URL
+				const randomID = this.generateID();
+				localStorage.setItem('oauth_discord_state', randomID);
+				window.location.assign(DISCORD_OAUTH2_BASE_URL + '?client_id=' + CLIENT_ID + '&redirect_uri=' + REDIRECT_URI + '&response_type=token&scope=identify&prompt=none&state=' + btoa(randomID) + '');
 			}
 		}
 
 		grabDiscordUser() {
 			const xhttp = new XMLHttpRequest();
 			const fragment = this.getURIFragment();
+			const tokenType = fragment.get('token_type');
+			const accessToken = fragment.get('access_token');
+			const state = fragment.get('state');
 			const xhrData = {
-				[fragment.get('token_type')]: fragment.get('access_token')
+				[tokenType]: accessToken
 			};
-
-			xhttp.open('GET', DISCORD_USERS_BASE_URL, true);
-			xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-			xhttp.setRequestHeader('Authorization', fragment.get('token_type') + ' ' + fragment.get('access_token'));
-			xhttp.send(xhrData);
 
 			// Remove the parameters from the URL, incase of a refresh so it doesn't try to reload the user with the same token
 			window.history.replaceState(null, null, window.location.pathname);
+
+			// In the event the state does not match the stored state, it's possible that someone intercepted the request or otherwise falsely authorized themselves to another user's resources, and the request should be denied.
+			if (localStorage.getItem('oauth_discord_state') !== atob(decodeURIComponent(state))) {
+				return;
+			}
+
+			xhttp.open('GET', DISCORD_USERS_BASE_URL, true);
+			xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+			xhttp.setRequestHeader('Authorization', tokenType + ' ' + accessToken);
+			xhttp.send(xhrData);
 			
 			xhttp.onloadend = () => {
 				const userObject = JSON.parse(xhttp.responseText);
@@ -175,7 +206,6 @@
 	const DiscordHandler = new DiscordHandlerInstance();
 	window.DiscordHandler = DiscordHandler;
 	if (VYLO) VYLO.global.DiscordHandler = DiscordHandler;
-
-	DiscordHandler.login();
+	if (AUTO_AUTH) DiscordHandler.login();
 
 })();
