@@ -16,8 +16,7 @@ A simple plugin to connect discord to a site/app/game/etc.
 ![image](https://user-images.githubusercontent.com/56242467/195375665-ee319e7d-205b-4d26-ab36-b401c02101b6.png)
 
 #### Now, we see some of the information we need. 
-image.png
-![image](https://user-images.githubusercontent.com/56242467/195376162-9b4a34f6-01ae-40f5-b89c-95f27738e3f0.png)
+![msedge_wW6s5O8jsP](https://user-images.githubusercontent.com/56242467/195515837-e7dd08c8-bd46-430b-bb9b-1f6e8b29aa31.png)
 
 #### We will need `Client ID` as well as adding some redirects.
 
