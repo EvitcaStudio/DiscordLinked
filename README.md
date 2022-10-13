@@ -16,17 +16,12 @@ A simple plugin to connect discord to a site/app/game/etc.
 ![image](https://user-images.githubusercontent.com/56242467/195375665-ee319e7d-205b-4d26-ab36-b401c02101b6.png)
 
 #### Now, we see some of the information we need. 
-
+image.png
 ![image](https://user-images.githubusercontent.com/56242467/195376162-9b4a34f6-01ae-40f5-b89c-95f27738e3f0.png)
 
-#### We will need `Client ID` and `Client Secret` as well as adding some redirects.
+#### We will need `Client ID` as well as adding some redirects.
 
-If your `Client Secret` value isn't showing, you need to reset it. 
-
-> **Warning**  
-> If you reset your `Client Secret` you will need to update it everywhere else you use it (such as this plugin)
-
-Once you have these values keep them nearby for later.  
+Once you have your `Client ID` keep it nearby for later.  
 We now need to add a few redirects to our discord app, so it knows where to go.  
 These redirects are official Domain/IPs that are trusted within this application. Such as your site/app/game/etc.    
 
@@ -36,10 +31,10 @@ These redirects are official Domain/IPs that are trusted within this application
 > If you have many servers, add each Domain/IP.  
 > These redirects also work with local hosting!
 
-## Client ID and Client Secret
+## Client ID  
 
-You will need to supply your `Client ID` and `Client Secret` inside of `discordLinked.js`  
-Open the `discordLinked.js` file, and find the declarations of `CLIENT_ID` and `CLIENT_SECRET` and input your `Client ID` and `Client Secret` values inside the empty strings.  
+You will need to supply your `Client ID` inside of `discordLinked.js`  
+Open the `discordLinked.js` file, and find the declaration of `CLIENT_ID` and input your `Client ID` value inside the empty string.  
 
 ## Connecting to a site/app/game/etc via your discord app    
 ![image](https://user-images.githubusercontent.com/56242467/195381931-e89f7ed2-237d-4422-9c4f-29bd86add424.png)  

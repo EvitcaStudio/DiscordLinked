@@ -1,6 +1,5 @@
 (() => {
 	const DISCORD_OAUTH2_BASE_URL = 'https://discordapp.com/api/oauth2/authorize';
-	const DISCORD_OAUTH2_TOKEN_BASE_URL = 'https://discordapp.com/api/oauth2/token';
 	const DISCORD_USERS_BASE_URL = 'https://discordapp.com/api/users/@me';
 	const DISCORD_AVATAR_BASE_URL = 'https://cdn.discordapp.com/avatars/';
 	const REDIRECT_URI = encodeURIComponent(window.location.href.replace('localhost', '127.0.0.1').split('?')[0]);
@@ -10,7 +9,6 @@
 
 // #BEGIN CODE_EDIT
 	const CLIENT_ID = '';
-	const CLIENT_SECRET = '';
 	// If you want this plugin to send a packet to the server with the data of the discord user. If this is set to true it will send a packet named `dAPI256` in which the data is the account info of the discord user
 	// It will need to be parsed into an object server side
 	const NETWORK = false;
@@ -123,44 +121,40 @@
 
 	class DiscordHandlerInstance {
 		// Get the parameters from the URL
-		getURIParams() {
-			// Split the URL into two parts, the link and the parameters
+		getURIFragment() {
 			// Grab the parameters and create a URLSearchParam object
-			const currentURL = window.location.href.split('?')[1];
-			const searchParams = new URLSearchParams(currentURL);
-			return searchParams;
+			const fragment = new URLSearchParams(window.location.hash.slice(1));
+			return fragment;
 		}
 
 		login() {
 			// If there is a code in the URL, this means we have visited the auth page and obtained it
 			// We can now use this code to get the user token
-			if (this.getCode()) {
-				this.grabUserToken();
+			if (this.getURIFragment().get('access_token')) {
+				this.grabDiscordUser();
 			// If there is no code then we need to go to the auth page to get one
 			} else {
 				// Move to the auth page to get the code that will be exchanged for a user token
 				// When code is grabbed, it will redirect the client to the game client again and it will have the token as a param in the URL
-				window.location.assign(DISCORD_OAUTH2_BASE_URL + '?client_id=' + CLIENT_ID + '&redirect_uri=' + REDIRECT_URI + '&response_type=code&scope=identify&prompt=none');
+				window.location.assign(DISCORD_OAUTH2_BASE_URL + '?client_id=' + CLIENT_ID + '&redirect_uri=' + REDIRECT_URI + '&response_type=token&scope=identify&prompt=none');
 			}
 		}
 
-		// Gets the code that was returned so that it can be turned into a user access token
-		getCode() {
-			const code = this.getURIParams().get('code');
-			return code;
-		}
-
-		grabDiscordUser(pToken) {
+		grabDiscordUser() {
 			const xhttp = new XMLHttpRequest();
+			const fragment = this.getURIFragment();
 			const xhrData = {
-				'Bearer': pToken.access_token
+				[fragment.get('token_type')]: fragment.get('access_token')
 			};
 
 			xhttp.open('GET', DISCORD_USERS_BASE_URL, true);
 			xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-			xhttp.setRequestHeader('Authorization', 'Bearer ' + pToken.access_token);
+			xhttp.setRequestHeader('Authorization', fragment.get('token_type') + ' ' + fragment.get('access_token'));
 			xhttp.send(xhrData);
 
+			// Remove the parameters from the URL, incase of a refresh so it doesn't try to reload the user with the same token
+			window.history.replaceState(null, null, window.location.pathname);
+			
 			xhttp.onloadend = () => {
 				const userObject = JSON.parse(xhttp.responseText);
 				const DiscordUser = new DiscordUserInstance(userObject);
@@ -169,25 +163,6 @@
 				if (NETWORK) {
 					this.sendUserToServer();
 				}
-			};
-		}
-
-		grabUserToken() {
-			// The current URL of the game server minus any URL parameters
-			const code = this.getCode();
-			const xhttp = new XMLHttpRequest();
-			const xhrData = 'client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET + '&redirect_uri=' + REDIRECT_URI + '&code=' + code + '&scope=identify&grant_type=authorization_code';
-
-			// Remove the parameters from the URL, incase of a refresh so it doesn't try to reload the user with the same token
-			window.history.replaceState(null, null, window.location.pathname);
-
-			xhttp.open('POST', DISCORD_OAUTH2_TOKEN_BASE_URL, true);
-			xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-			xhttp.send(xhrData);
-
-			xhttp.onloadend = () => {
-				const token = JSON.parse(xhttp.responseText);
-				this.grabDiscordUser(token);
 			};
 		}
 
