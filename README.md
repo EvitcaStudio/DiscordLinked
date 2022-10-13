@@ -44,6 +44,8 @@ If you do not want to automatically authenticate, then you will need to use `Dis
 ## NETWORK `Vylocity Only` 
 
 If you want to enable sharing this discord user's information to the server, you have to enable it in this plugin by finding and setting the declaration of `NETWORK` to `true` It is `false` by default.  
+If used in tandem with `AUTO_AUTH` you will have to manually send a packet when `Client` is created  
+
 With networking enabled, this plugin will send a packet to the server with the name of `dAPI256` and the basic data of the discord user. This data is in the format of discord's [userObject](https://discord.com/developers/docs/resources/user#user-object) and is serialized as a string.  
 
 ## Connecting to a site/app/game/etc via your discord app    

@@ -199,7 +199,9 @@
 
 		// If networking is enabled, then this will send a packet to the server with the discord user data 
 		sendUserToServer() {
-			if (VYLO) VYLO.Client.sendPacket('dAPI256', JSON.stringify(VYLO.Client.DiscordUser));
+			if (VYLO) {
+				if (VYLO.Client) VYLO.Client.sendPacket('dAPI256', JSON.stringify(DiscordUser));
+			}
 		}
 	}
 
