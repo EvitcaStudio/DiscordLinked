@@ -45,7 +45,7 @@
 			return this.userObject.avatar;
 		}
 
-		// UserObject.banner_color https://discord.com/developers/docs/resources/user#user-object
+		// UserObject.banner https://discord.com/developers/docs/resources/user#user-object
 		getBanner() {
 			return this.userObject.banner_color;
 		}

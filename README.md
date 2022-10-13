@@ -1,10 +1,5 @@
-# vyDiscord  
-A simple plugin to connect discord to vylocity.  
-
-
-# Implementation  
-
-#### #INCLUDE SCRIPT vyDiscord.min.js  
+# DiscordLinked  
+A simple plugin to connect discord to a site/app/game/etc.    
 
 # Creating a app on discord
 
@@ -33,7 +28,7 @@ If your `Client Secret` value isn't showing, you need to reset it.
 
 Once you have these values keep them nearby for later.  
 We now need to add a few redirects to our discord app, so it knows where to go.  
-These redirects are official Domain/IPs that are trusted within this application. Such as your game server.  
+These redirects are official Domain/IPs that are trusted within this application. Such as your site/app/game/etc.    
 
 ![image](https://user-images.githubusercontent.com/56242467/195378346-78bbf89e-c6df-4265-bd2b-3d5c345e24c1.png)
 
@@ -43,14 +38,72 @@ These redirects are official Domain/IPs that are trusted within this application
 
 ## Client ID and Client Secret
 
-You will need to supply your `Client ID` and `Client Secret` inside of `vyDiscord.js`  
-Open the `vyDiscord.js` file, and find the declarations of `CLIENT_ID` and `CLIENT_SECRET` and input your `Client ID` and `Client Secret` values inside the empty strings.  
+You will need to supply your `Client ID` and `Client Secret` inside of `discordLinked.js`  
+Open the `discordLinked.js` file, and find the declarations of `CLIENT_ID` and `CLIENT_SECRET` and input your `Client ID` and `Client Secret` values inside the empty strings.  
 
-## Connecting to a game via your discord app    
+## Connecting to a site/app/game/etc via your discord app    
 ![image](https://user-images.githubusercontent.com/56242467/195381931-e89f7ed2-237d-4422-9c4f-29bd86add424.png)  
 When connecting to a game, users will be prompted to login via discord if they are not already logged in, and will be prompted to authorize your discord app to use their data.
-Upon authorization, the game will load.  
+Upon authorization, the site/app/game/etc will load.  
 
 ## Networking  
 If you want to enable sharing this discord user's information to the server, you have to enable it in this plugin by finding and setting the declaration of `NETWORK` to `true` It is `false` by default.  
 With networking enabled, this plugin will send a packet to the server with the name of `dAPI256` and the basic data of the discord user. This data is in the format of discord's [userObject](https://discord.com/developers/docs/resources/user#user-object) and is serialized as a string.  
+
+# Implementation  
+
+#### #INCLUDE SCRIPT discordLinked.js  `Vylocity only`
+
+> **Note**  
+> Outside of Vylocity, just include the script into the project files.  
+
+## How to reference  
+window.DiscordUser | DiscordUser `JavaScript`  
+DiscordUser `VyScript`
+
+## API  
+
+###  DiscordUser.getID()
+   - `returns`: Returns the id of the logged in discord user  
+
+###  DiscordUser.getUserName()
+   - `returns`: Returns the username of the logged in discord user    
+
+###  DiscordUser.getAvatar()
+   - `returns`: Returns the avatar hash of the logged in discord user 
+
+###  DiscordUser.getBanner()
+   - `returns`: Returns the banner hash of the logged in discord user 
+
+###  DiscordUser.getBannerColor()
+   - `returns`: Returns the banner color of the logged in discord user 
+
+###  DiscordUser.getAccentColor()
+   - `returns`: Returns the accent color of the logged in discord user 
+
+###  DiscordUser.getNitro()
+   - `returns`: Returns the nitro membership of the logged in discord user  
+    0: None
+    1: Nitro Classic
+    2: Nitro
+
+###  DiscordUser.get2FA()
+   - `returns`: Returns if the logged in discord user has 2fa enabled  
+
+###  DiscordUser.getTag()
+   - `returns`: Returns the tag of the logged in discord user  
+
+###  DiscordUser.getPublicFlags()
+   - `returns`: Returns the public flags on the logged in discord user's account  
+
+###  DiscordUser.isBot()
+   - `returns`: Returns if the logged in discord user is a bot  
+
+###  DiscordUser.isVerfied()
+   - `returns`: Returns if the logged in discord user has verified their email address  
+
+###  DiscordUser.createDiscordAvii(pWidth, pHeight, pCallback)  `Vylocity only`
+   - `pWidth`: The width to make the discord avatar icon     
+   - `pHeight`: The height to make the discord avatar icon    
+   - `pCallback`: A callback function that will be called when this icon is ready    
+   - `description`: Inside of the callback, the icon will be ready to be used. The `atlasName` will be the `id` of `DiscordUser` and the `iconName` will be the static name of `avii`  
