@@ -41,14 +41,15 @@ If you would like this plugin to automatically authenticate ASAP, then open the 
 
 If you do not want to automatically authenticate, then you will need to use `DiscordHandler.login()`.
 
+## NETWORK `Vylocity Only` 
+
+If you want to enable sharing this discord user's information to the server, you have to enable it in this plugin by finding and setting the declaration of `NETWORK` to `true` It is `false` by default.  
+With networking enabled, this plugin will send a packet to the server with the name of `dAPI256` and the basic data of the discord user. This data is in the format of discord's [userObject](https://discord.com/developers/docs/resources/user#user-object) and is serialized as a string.  
+
 ## Connecting to a site/app/game/etc via your discord app    
 ![image](https://user-images.githubusercontent.com/56242467/195381931-e89f7ed2-237d-4422-9c4f-29bd86add424.png)  
 When connecting to a game, users will be prompted to login via discord if they are not already logged in, and will be prompted to authorize your discord app to use their data.
 Upon authorization, the site/app/game/etc will load.  
-
-## Networking  
-If you want to enable sharing this discord user's information to the server, you have to enable it in this plugin by finding and setting the declaration of `NETWORK` to `true` It is `false` by default.  
-With networking enabled, this plugin will send a packet to the server with the name of `dAPI256` and the basic data of the discord user. This data is in the format of discord's [userObject](https://discord.com/developers/docs/resources/user#user-object) and is serialized as a string.  
 
 # Implementation  
 
