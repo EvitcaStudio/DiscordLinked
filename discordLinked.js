@@ -25,7 +25,7 @@
 	canvas.width = DISCORD_IMAGE_WIDTH;
 	canvas.height = DISCORD_IMAGE_HEIGHT;
 	
-	class VYDiscordUser {
+	class DiscordUserInstance {
 		constructor(pUserObject){
 			this.userObject = pUserObject;
 		}
@@ -121,7 +121,7 @@
 		}
 	}
 
-	class VYDiscordHandler {
+	class DiscordHandlerInstance {
 		// Get the parameters from the URL
 		getURIParams() {
 			// Split the URL into two parts, the link and the parameters
@@ -163,7 +163,7 @@
 
 			xhttp.onloadend = () => {
 				const userObject = JSON.parse(xhttp.responseText);
-				const DiscordUser = new VYDiscordUser(userObject);
+				const DiscordUser = new DiscordUserInstance(userObject);
 				window.DiscordUser = DiscordUser;
 				if (VYLO) VYLO.global.DiscordUser = DiscordUser;
 				if (NETWORK) {
@@ -197,7 +197,7 @@
 		}
 	}
 
-	const DiscordHandler = new VYDiscordHandler();
+	const DiscordHandler = new DiscordHandlerInstance();
 	window.DiscordHandler = DiscordHandler;
 	if (VYLO) VYLO.global.DiscordHandler = DiscordHandler;
 
