@@ -148,7 +148,7 @@
 		}
 	}
 
-	class DiscordHandlerInstance {
+	class DiscordHandlerManager {
 		constructor() {
 			this.storedIDs = [];
 		}
@@ -233,9 +233,9 @@
 		}
 	}
 
-	const DiscordHandler = new DiscordHandlerInstance();
+	const DiscordHandler = new DiscordHandlerManager();
 	window.DiscordHandler = DiscordHandler;
-	if (VYLO) VYLO.global.DiscordHandler = DiscordHandler;
+	if (typeof(VYLO) !== 'undefined') VYLO.global.DiscordHandler = DiscordHandler;
 	if (AUTO_AUTH) DiscordHandler.login();
 
 })();
