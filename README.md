@@ -1,6 +1,21 @@
 # DiscordLinked  
 A simple plugin to connect discord to a site/app/game/etc.    
 
+> **Warning**  
+This plugin is using the [Implicit Grant](https://discord.com/developers/docs/topics/oauth2#implicit-grant) workflow of `OAuth2`.  
+This simply means, the `Client` is directly being given an `access_token`, rather than querying the `server` for one. Meaning it skips the `server` entirely.  
+All data is passed directly to the `Client`. In this case, the data is the [User Object](https://discord.com/developers/docs/resources/user).  
+Overall in it's current state this is a `Client-Side` plugin with the optional choice to send data to the server.  
+(If using `NETWORK` then you should make sure that you trust the data from the client or data-spoofing can occur).  
+
+> **Info**  
+In the future more workflows will be allowed and will be defaulted to as the standard.  
+Such as the [Authorization Code Grant](https://discord.com/developers/docs/topics/oauth2#authorization-code-grant) as well as the [Client Credentials Grant](https://discord.com/developers/docs/topics/oauth2#client-credentials-grant).  
+These will allow for more personalized workflows for different games/applications.  
+These will also allow the server to act as an intermediary, so that data doesn't have to actually be passed directly to the `Client`  
+
+
+
 # Creating a app on discord
 
 #### Head over to https://discord.com/developers/applications
