@@ -1,12 +1,13 @@
 # DiscordLinked  
 A simple plugin to connect discord to a site/app/game/etc.    
 
+# Security  
+
 > **Warning**  
-This plugin is using the [Implicit Grant](https://discord.com/developers/docs/topics/oauth2#implicit-grant) workflow of `OAuth2`.  
-This simply means, the `Client` is directly being given an `access_token`, rather than querying the `server` for one. Meaning it skips the `server` entirely.  
-All data is passed directly to the `Client`. In this case, the data is the [User Object](https://discord.com/developers/docs/resources/user).  
-Overall in it's current state this is a `Client-Side` plugin with the optional choice to send data to the server.  
-(If using `NETWORK` then you should make sure that you trust the data from the client or data-spoofing can occur).  
+This plugin is currently using the [Implicit Grant](https://discord.com/developers/docs/topics/oauth2#implicit-grant) workflow of `OAuth2`.  
+This simply means the `Client` is directly being given an `access_token` rather than an `access_code`. In a standard `OAuth2` workflow that `access_code` would be passed to the server and the server would query `Discord` using that `access_code` to verify the user on the `Server-Side` rather than `Client-Side`. Using the `Implicit Grant` workflow, means it skips the `server` entirely.  
+In this workflow all data is passed directly to the `Client`. In this case, the data is the [User Object](https://discord.com/developers/docs/resources/user).  
+(If you are using `NETWORK` or are manually sending data from the `User Object` to the server then **you should make sure that you trust the data from the client or data-spoofing can occur)**.  
 
 > **Note**  
 In the future more workflows will be allowed and will be defaulted to as the standard.  
@@ -14,7 +15,7 @@ Such as the [Authorization Code Grant](https://discord.com/developers/docs/topic
 These will allow for more personalized workflows for different games/applications.  
 These will also allow the server to act as an intermediary, so that data doesn't have to actually be passed directly to the `Client`  
 
-
+If this workflow is an issue with security, then it is advised to not use it in it's current state. And to rather wait for the aforementioned workflows to be added.    
 
 # Creating a app on discord
 
