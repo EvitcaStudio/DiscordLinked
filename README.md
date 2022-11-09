@@ -8,7 +8,7 @@ All data is passed directly to the `Client`. In this case, the data is the [User
 Overall in it's current state this is a `Client-Side` plugin with the optional choice to send data to the server.  
 (If using `NETWORK` then you should make sure that you trust the data from the client or data-spoofing can occur).  
 
-> **Info**  
+> **Note**  
 In the future more workflows will be allowed and will be defaulted to as the standard.  
 Such as the [Authorization Code Grant](https://discord.com/developers/docs/topics/oauth2#authorization-code-grant) as well as the [Client Credentials Grant](https://discord.com/developers/docs/topics/oauth2#client-credentials-grant).  
 These will allow for more personalized workflows for different games/applications.  
