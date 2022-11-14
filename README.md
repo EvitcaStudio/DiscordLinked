@@ -73,7 +73,7 @@ Upon authorization, the site/app/game/etc will load.
 
 # Implementation  
 
-#### #INCLUDE SCRIPT discordLinked.js  `Vylocity only`
+#### #INCLUDE SCRIPT discord-linked.js  `Vylocity only`
 
 > **Note**  
 > Outside of Vylocity, just include the script into the project files.  
