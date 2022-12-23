@@ -114,7 +114,7 @@
 		}
 
 		// UserObject.bot https://discord.com/developers/docs/resources/user#user-object
-		isVerfied() {
+		isVerified() {
 			return this.userObject.verified;
 		}
 
