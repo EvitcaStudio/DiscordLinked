@@ -132,7 +132,7 @@ DiscordHandler `VyScript`
 ###  DiscordUser.isBot()
    - `returns`: Returns if the logged in discord user is a bot  
 
-###  DiscordUser.isVerfied()
+###  DiscordUser.isVerified()
    - `returns`: Returns if the logged in discord user has verified their email address  
 
 ###  DiscordUser.createDiscordAvii(pWidth, pHeight, pCallback)  `Vylocity only`
