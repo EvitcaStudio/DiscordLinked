@@ -183,7 +183,7 @@
 				// When the accesstoken is grabbed, it will redirect the client to the game client again and it will have the token as a param in the URL
 				const randomID = this.generateID();
 				localStorage.setItem('oauth_discord_state', randomID);
-				window.location.assign(DISCORD_OAUTH2_BASE_URL + '?client_id=' + CLIENT_ID + '&redirect_uri=' + REDIRECT_URI + '&response_type=token&scope=identify&prompt=none&state=' + btoa(randomID) + '');
+				window.location.assign(`${DISCORD_OAUTH2_BASE_URL}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=token&scope=identify&prompt=none&state=${btoa(randomID)}`);
 			}
 		}
 
