@@ -37,7 +37,6 @@
 
 // #BEGIN CODE_EDIT
 	const CLIENT_ID = '';
-	const AUTO_AUTH = false;
 // #END CODE_EDIT
 
 	const canvas = document.createElement('canvas');
@@ -223,6 +222,5 @@
 	const DiscordHandler = new DiscordHandlerManager();
 	window.DiscordHandler = DiscordHandler;
 	if (typeof(VYLO) !== 'undefined') VYLO.global.DiscordHandler = DiscordHandler;
-	if (AUTO_AUTH) DiscordHandler.login();
 
 })();
