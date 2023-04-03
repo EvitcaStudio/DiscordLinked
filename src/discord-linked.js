@@ -38,9 +38,6 @@
 // #BEGIN CODE_EDIT
 	const CLIENT_ID = '';
 	const AUTO_AUTH = false;
-	// If you want this plugin to send a packet to the server with the data of the discord user. If this is set to true it will send a packet named `dAPI256` in which the data is the account info of the discord user
-	// It will need to be parsed into an object server side
-	const NETWORK = false;
 // #END CODE_EDIT
 
 	const canvas = document.createElement('canvas');
@@ -219,17 +216,7 @@
 				const DiscordUser = new DiscordUserInstance(userObject);
 				window.DiscordUser = DiscordUser;
 				if (VYLO) VYLO.global.DiscordUser = DiscordUser;
-				if (NETWORK) {
-					this.sendUserToServer();
-				}
 			};
-		}
-
-		// If networking is enabled, then this will send a packet to the server with the discord user data 
-		sendUserToServer() {
-			if (VYLO) {
-				if (VYLO.Client) VYLO.Client.sendPacket('dAPI256', JSON.stringify(DiscordUser));
-			}
 		}
 	}
 

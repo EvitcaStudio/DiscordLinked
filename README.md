@@ -1,13 +1,12 @@
-# DiscordLinked  
+# discord-linked  
 A simple plugin to connect discord to a site/app/game/etc.    
 
 # Security  
 
 > **Warning**  
 This plugin is currently using the [Implicit Grant](https://discord.com/developers/docs/topics/oauth2#implicit-grant) workflow of `OAuth2`.  
-This simply means the `Client` is directly being given an `access_token` rather than an `access_code`. In a standard `OAuth2` workflow that `access_code` would be passed to the server and the server would query `Discord` using that `access_code` to verify the user on the `Server-Side` rather than `Client-Side`. Using the `Implicit Grant` workflow, means it skips the `server` entirely.  
-In this workflow all data is passed directly to the `Client`. In this case, the data is the [User Object](https://discord.com/developers/docs/resources/user).  
-(If you are using `NETWORK` or are manually sending data from the `User Object` to the server then **you should make sure that you trust the data from the client or data-spoofing can occur)**.  
+This simply means the `Client(Browser)` is directly being given an `access_token` rather than an `access_code`. In a standard `OAuth2` workflow that `access_code` would be passed to the server and the server would query `Discord` using that `access_code` to verify the user on the `Server-Side` rather than `Client-Side`. Using the `Implicit Grant` workflow, means it skips the `server` entirely.  
+In this workflow all data is passed directly to the `Client`. In this case, the data is the [User Object](https://discord.com/developers/docs/resources/user).   
 
 > **Note**  
 In the future more workflows will be allowed and will be defaulted to as the standard.  
@@ -48,23 +47,14 @@ These redirects are official Domain/IPs that are trusted within this application
 
 ## CLIENT_ID  
 
-You will need to supply your `Client ID` inside of `discordLinked.js`  
-Open the `discordLinked.js` file, and find the declaration of `CLIENT_ID` and input your `Client ID` value inside the empty string.  
+You will need to supply your `Client ID` inside of `discord-linked.js`  
+Open the `discord-linked.js` file, and find the declaration of `CLIENT_ID` and input your `Client ID` value inside the empty string.  
 
 ## AUTO_AUTH
 
-If you would like this plugin to automatically authenticate ASAP, then open the `discordLinked.js` file, and find the declaration of `AUTO_AUTH` and input the value `true` It is false by default.  
+If you would like this plugin to automatically authenticate ASAP, then open the `discord-linked.js` file, and find the declaration of `AUTO_AUTH` and input the value `true` It is false by default.  
 
 If you do not want to automatically authenticate, then you will need to use `DiscordHandler.login()`.
-
-## NETWORK `Vylocity Only` 
-
-If you want to enable sharing this discord user's information to the server, you have to enable it in this plugin by finding and setting the declaration of `NETWORK` to `true` It is `false` by default.  
-
-With networking enabled, this plugin will send a packet to the server with the name of `dAPI256` and the basic data of the discord user. This data is in the format of discord's [userObject](https://discord.com/developers/docs/resources/user#user-object) and is serialized as a string.  
-
-> **Warning**  
-If used in tandem with `AUTO_AUTH` you will have to manually send a packet when `Client` is created  
 
 ## Connecting to a site/app/game/etc via your discord app    
 ![image](https://user-images.githubusercontent.com/56242467/195381931-e89f7ed2-237d-4422-9c4f-29bd86add424.png)  
